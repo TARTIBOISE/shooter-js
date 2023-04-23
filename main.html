@@ -1,25 +1,7 @@
-<h1>SUPER JEU 😯🎮🔫</h1></br><!--le titre en haut de l'écran-->
+<h1>SUPER JEU 😯🎮</h1></br><!--le titre en haut de l'écran-->
 <canvas id="myCanvas" width="500" height="500" style="border:solid"></canvas><!--la fenetre de jeu-->
 <script>
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
-
-    //taille du joueur customisable
-    var hjoueur=50;
-    var ljoueur=50;
-    //les couleurs aussi sont customisables
-    var rjoueur=200;
-    var gjoueur=200;
-    var bjoueur=200;
-    var depjoueur=0;//1 il va à droite -1 il va à gauche et 0 il bouge pas
-    var vjoueur=10;//la vitesse de déplacement du joueur
-    var xjoueur=200;
-    var yjoueur=400;
-
-    function dessinjoueur(xjoueur,yjoueur,h,l){
-        context.fillRect(200,400,h,l);//dessin d'un rectangle avec les coordonnées et la taille
-    }
-
-
-    requestAnimationFrame(dessinjoueur(xjoueur,yjoueur,hjoueur,ljoueur));//execution de la fonction dessinjoueur
+    
 </script>
