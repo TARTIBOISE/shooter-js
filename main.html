@@ -3,5 +3,31 @@
 <script>
     var canvas = document.getElementById("myCanvas");
     var context = canvas.getContext("2d");
+    //rond
+    var radius = 15;
+    var xballe = 10;
+    var yballe = 150;
+
+    function draw() {
+        //permet de supprimer les éléments existants dans le canvas
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        //redessine le cercle
+        context.beginPath();
+        context.arc(xballe, yballe, radius, 0, 2 * Math.PI);
+
+        var r = Math.random()*255;
+        parseInt(r);
+        var g =Math.random()*255;
+        parseInt(g);
+        var b = Math.random()*255;
+        parseInt(b);
+
+        context.fillStyle = "rgba("+r+","+g+","+b+")";
+        context.fill();
     
+//permet d'appeler la fonction indéfiniement
+requestAnimationFrame(draw);
+}
+//premier appel de la fonction
+requestAnimationFrame(draw);
 </script>
