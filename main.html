@@ -5,53 +5,42 @@
     var context = canvas.getContext("2d");
     //rond
     var radius = 15;
-    var pos = {x:0, y:0};
     var posmouse = {x:0, y:0};
     var points = 0;
-    var r = Math.random()*255;
-    parseInt(r);
-    var g =Math.random()*255;
-    parseInt(g);
-    var b = Math.random()*255;
-    parseInt(b);
+    
+    function cible(){
+        this.pos={x:Math.random()*255,y:Math.random()*255};
+        var r = Math.random()*255;
+        parseInt(r);
+        var g =Math.random()*255;
+        parseInt(g);
+        var b = Math.random()*255;
+        parseInt(b);
+        this.draw = function() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.beginPath();
+            context.arc(this.pos.x, this.pos.y, radius, 0, 2 * Math.PI);
 
-    function draw() {
-        //permet de supprimer les éléments existants dans le canvas
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        //redessine le cercle
-        context.beginPath();
-        context.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
-
-        context.fillStyle = "rgba("+r+","+g+","+b+")";
-        context.fill();
-            
-        //permet d'appeler la fonction indéfiniement
-        requestAnimationFrame(draw);
+            context.fillStyle = "rgba("+this.r+","+this.g+","+this.b+")";
+            context.fill();
+                
+            requestAnimationFrame(this.draw);
+        }
     }
-
+    
     document.addEventListener('mousedown',getMousePosition);
 
     function getMousePosition(e) {
         posmouse.x = e.offsetX;
         posmouse.y = e.offsetY;
-        console.log("---------");
-        console.log(posmouse);
-        console.log(pos);
         
-        if(pos.x<=posmouse.x+radius&&pos.x>=posmouse.x-radius&&pos.y<=posmouse.y+radius&&pos.y>=posmouse.y-radius){
+        if(aaaa.pos.x<=posmouse.x+radius&&aaaa.pos.x>=posmouse.x-radius&&aaaa.pos.y<=posmouse.y+radius&&aaaa.pos.y>=posmouse.y-radius){
             points++;
-            pos.x=parseInt(Math.random()*500);
-            pos.y=parseInt(Math.random()*500);
-            r = Math.random()*255;
-            parseInt(r);
-            g =Math.random()*255;
-            parseInt(g);
-            b = Math.random()*255;
-            parseInt(b);
         }
 
     }
 
     //premier appel de la fonction
-    requestAnimationFrame(draw);
+    var aaaa = new cible();
+    aaaa.draw();
 </script>
