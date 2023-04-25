@@ -5,6 +5,8 @@
     var context = canvas.getContext("2d");
     //rond
     var radius = 15;
+    var pos = {x:0, y:0};
+    var posmouse = {x:0, y:0};
     var xballe = 10;
     var yballe = 150;
 
@@ -13,7 +15,7 @@
         context.clearRect(0, 0, canvas.width, canvas.height);
         //redessine le cercle
         context.beginPath();
-        context.arc(xballe, yballe, radius, 0, 2 * Math.PI);
+        context.arc(pos.x, pos.y, radius, 0, 2 * Math.PI);
 
         var r = Math.random()*255;
         parseInt(r);
@@ -24,10 +26,24 @@
 
         context.fillStyle = "rgba("+r+","+g+","+b+")";
         context.fill();
-    
-//permet d'appeler la fonction indéfiniement
-requestAnimationFrame(draw);
-}
-//premier appel de la fonction
-requestAnimationFrame(draw);
+            
+        //permet d'appeler la fonction indéfiniement
+        requestAnimationFrame(draw);
+    }
+
+    document.addEventListener('mousedown',getMousePosition);
+
+    function getMousePosition(e) {
+        posmouse.x = e.offsetX;
+        posmouse.y = e.offsetY;
+        console.log(posmouse);
+
+    }
+
+    if(pos.x<=posmouse.x+7&&pos.x>=posmouse.x-7&&pos.y<=posmouse.y+7&&pos.y>=posmouse.y-7){
+        window.alert("aaa");
+    }
+
+    //premier appel de la fonction
+    requestAnimationFrame(draw);
 </script>
