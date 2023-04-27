@@ -1,46 +1,76 @@
-<h1>SUPER JEU 😯🎮</h1></br><!--le titre en haut de l'écran-->
-<canvas id="myCanvas" width="500" height="500" style="border:solid"></canvas><!--la fenetre de jeu-->
+<h3>SUPER JEU 😯🎮</h3><!--le titre en haut de l'écran-->
+<div>score : </div><div id="score"></div>
+<canvas id="myCanvas" style="border:solid"></canvas><!--la fenetre de jeu-->
 <script>
     var canvas = document.getElementById("myCanvas");
+    canvas.width=window.innerWidth-100;
+    canvas.height=window.innerHeight-100;
     var context = canvas.getContext("2d");
-    //rond
-    var radius = 15;
-    var posmouse = {x:0, y:0};
+    
+    var cibles = new Set();
     var points = 0;
     
-    function cible(){
-        this.pos={x:Math.random()*255,y:Math.random()*255};
+    function dessinCible(x,y,radius,r,g,b){
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.fillStyle = "rgba("+r+","+g+","+b+")";
+        context.fill();
+    }
+    
+    function dessinPlusieursCibles(){
+        context.clearRect(0,0,canvas.width,canvas.height);
+        cibles.forEach(
+            function(cible){
+                dessinCible(cible.x,cible.y,cible.radius,cible.r,cible.g,cible.b);
+            }
+        );
+    }
+
+    function nouvelleCible(x,y,radius,r,g,b){
+        cibles.add(
+            {
+                x:x,
+                y:y,
+                radius:radius,
+                r:r,
+                g:g,
+                b:b
+            }
+        );
+    }
+
+    function deletCible(cible){
+        cibles.delete(cible);
+    }
+    
+
+    canvas.addEventListener('mousedown',function(event){
+        const mouseX = event.clientX - canvas.offsetLeft;
+        const mouseY = event.clientY - canvas.offsetTop;
+        cibles.forEach(function(cible){
+            if (Math.sqrt((mouseX - cible.x)**2 + (mouseY - cible.y)**2) < cible.radius) {
+                deletCible(cible);
+                points++;
+                document.getElementById("score").innerHTML = points;
+
+            }
+        })
+    });
+
+    function RandomCibles(){
+        var x = Math.random()*canvas.width;
+        var y = Math.random()*canvas.height;
         var r = Math.random()*255;
         parseInt(r);
         var g =Math.random()*255;
         parseInt(g);
         var b = Math.random()*255;
         parseInt(b);
-        this.draw = function() {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.beginPath();
-            context.arc(this.pos.x, this.pos.y, radius, 0, 2 * Math.PI);
+        var radius = Math.random()*50;
+        nouvelleCible(x,y,radius,r,g,b);
 
-            context.fillStyle = "rgba("+this.r+","+this.g+","+this.b+")";
-            context.fill();
-                
-            requestAnimationFrame(this.draw);
-        }
-    }
-    
-    document.addEventListener('mousedown',getMousePosition);
-
-    function getMousePosition(e) {
-        posmouse.x = e.offsetX;
-        posmouse.y = e.offsetY;
-        
-        if(aaaa.pos.x<=posmouse.x+radius&&aaaa.pos.x>=posmouse.x-radius&&aaaa.pos.y<=posmouse.y+radius&&aaaa.pos.y>=posmouse.y-radius){
-            points++;
-        }
-
+        dessinPlusieursCibles();
     }
 
-    //premier appel de la fonction
-    var aaaa = new cible();
-    aaaa.draw();
+    setInterval(RandomCibles, 1000-(points*10)); 
 </script>
